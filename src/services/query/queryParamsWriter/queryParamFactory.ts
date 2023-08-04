@@ -31,7 +31,7 @@ export default class QueryParamFactory {
     }
 
     build(): StorefrontApiQueryParams {
-        const result = {};
+        const result: any = {};
         Object.keys(this.queryParamBuilder).forEach((query) => {
             const data = this.queryParamBuilder[query];
             const dataToRead = data.reads;
