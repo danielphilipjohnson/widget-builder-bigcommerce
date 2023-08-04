@@ -52,26 +52,6 @@ export function getWidget(data: WidgetPreviewRenderRequest): Promise<string> {
 interface PublishWidgetResponse {
   uuid: string;
 }
-// jest src/services/api/widget.test.ts
-
-// export const publishWidget = (
-//    widgetData: WidgetConfiguration,
-//    uuid: string | null,
-// ): Promise<PublishWidgetResponse> => new Promise((resolve, reject) => {
-//    Axios({
-//        method: uuid ? 'put' : 'post',
-//        headers: {
-//            Accept: 'application/json',
-//            'Content-Type': 'application/json',
-//            'X-Auth-Client': AUTH_CONFIG.authId,
-//            'X-Auth-Token': AUTH_CONFIG.authToken,
-//        },
-//        data: widgetData,
-//        url: `${widgetApi.widgetTemplatePublish}${uuid ? `/${uuid}` : ''}`,
-//    })
-//        .then(({ data: { data } }) => resolve(data))
-//        .catch((error) => reject(error));
-// });
 
 /**
  * Publishes a widget template to the server.
@@ -83,8 +63,8 @@ interface PublishWidgetResponse {
  * @returns A Promise that resolves to the response data from the server.
  *
  * @example
- * ```typescript
- * const widgetData = { /* Your widget configuration object * / };
+ * ```ts
+ * const widgetData = { };
  * const uuid = '12345'; // or null for creating a new template
  *
  * try {
