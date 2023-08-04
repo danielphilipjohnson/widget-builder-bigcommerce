@@ -9,9 +9,9 @@ export interface AuthConfig {
 }
 
 const AUTH_CONFIG: AuthConfig = {
-    authId: process.env.WIDGET_BUILDER_AUTH_ID || '',
-    apiPath: process.env.WIDGET_BUILDER_API_GATEWAY_BASE || '',
-    authToken: process.env.WIDGET_BUILDER_AUTH_TOKEN || '',
+    authId: process.env.WIDGET_BUILDER_AUTH_ID ?? '',
+    apiPath: process.env.WIDGET_BUILDER_API_GATEWAY_BASE ?? '',
+    authToken: process.env.WIDGET_BUILDER_AUTH_TOKEN ?? '',
 };
 
 export default AUTH_CONFIG;
