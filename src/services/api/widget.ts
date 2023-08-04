@@ -3,6 +3,10 @@ import Axios, { AxiosResponse } from 'axios';
 import AUTH_CONFIG from '../auth/authConfig';
 import { WidgetConfiguration } from '../schema/schemaParser/schemaParser';
 
+interface PublishWidgetResponse {
+    uuid: string;
+  }
+
 export const widgetApi = {
     widgetPreviewRender: `${AUTH_CONFIG.apiPath}/content/widget-templates/preview`,
     widgetTemplatePublish: `${AUTH_CONFIG.apiPath}/content/widget-templates`,
@@ -22,32 +26,6 @@ export interface WidgetPreviewRenderRequest {
   storefront_api_query_params: object;
   channel_id: number;
 }
-
-// export function getWidget(data: WidgetPreviewRenderRequest): Promise<string> {
-//    return new Promise((resolve, reject) => {
-//        Axios({
-//            method: 'post',
-//            headers: {
-//                Accept: 'application/json',
-//                'Content-Type': 'application/json',
-//                'X-Auth-Client': AUTH_CONFIG.authId,
-//                'X-Auth-Token': AUTH_CONFIG.authToken,
-//            },
-//            data,
-//            url: widgetApi.widgetPreviewRender,
-//        })
-//            .then(
-//                ({
-//                    data: {
-//                        data: { html },
-//                    },
-//                }: AxiosResponse<WidgetPreviewRenderResponse>) => {
-//                    resolve(html);
-//                },
-//            )
-//            .catch((err: Error) => reject(err));
-//    });
-// }
 
 /**
  * Fetches a widget preview by sending a POST request to the specified API endpoint.
@@ -95,10 +73,6 @@ export async function getWidget(data: WidgetPreviewRenderRequest): Promise<strin
     } catch (error) {
         throw new Error('Request failed with status code 400'); // You can customize the error message
     }
-}
-
-interface PublishWidgetResponse {
-  uuid: string;
 }
 
 /**
