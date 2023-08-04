@@ -15,11 +15,7 @@ import {
 } from '../../../types';
 
 // eslint-disable-next-line default-param-last
-function parseRegExPatternsDefaults(
-    id: string,
-    defaultValue = '',
-    regExPatterns: RegExPattern[],
-) {
+function parseRegExPatternsDefaults(id: string, defaultValue = '', regExPatterns: RegExPattern[]) {
     const regExPatternConfigurations: WidgetConfiguration = {};
     const config: WidgetConfiguration = {};
     const partsConfig: WidgetConfiguration = {};
@@ -75,9 +71,7 @@ function buildSettingsDefaults(settings: BaseSchemaSetting[]) {
     settings.forEach((setting: BaseSchemaSetting) => {
         if (setting.typeMeta) {
             if (setting.typeMeta.conditionalSettings) {
-                const parsedDefaults = parseConditionalDefaults(
-                    setting.typeMeta.conditionalSettings,
-                );
+                const parsedDefaults = parseConditionalDefaults(setting.typeMeta.conditionalSettings);
 
                 configuration = {
                     ...configuration,
@@ -132,9 +126,7 @@ function parseTabSchemaDefaults(tabSections: SchemaSection[]) {
     return configuration;
 }
 
-export function parseArraySchemaDefaults(
-    arraySchemaElement: ArraySchemaElement,
-) {
+export function parseArraySchemaDefaults(arraySchemaElement: ArraySchemaElement) {
     let configuration: WidgetConfiguration = {};
 
     const defaultCount = arraySchemaElement.defaultCount || 1;
@@ -145,9 +137,7 @@ export function parseArraySchemaDefaults(
     arraySchema.forEach((schemaElement: SchemaElement) => {
         if (schemaElement.type === SchemaElementType.TAB) {
             const tabSchemaElement = schemaElement as TabSchemaElement;
-            const tabSettingDefaults = parseTabSchemaDefaults(
-                tabSchemaElement.sections,
-            );
+            const tabSettingDefaults = parseTabSchemaDefaults(tabSchemaElement.sections);
             arrayElementConfiguration = {
                 ...arrayElementConfiguration,
                 ...tabSettingDefaults,
@@ -156,9 +146,7 @@ export function parseArraySchemaDefaults(
 
         if (schemaElement.type === SchemaElementType.HIDDEN) {
             const hiddenSchemaElement = schemaElement as HiddenSchemaElement;
-            const hiddenSettingDefaults = buildSettingsDefaults(
-                hiddenSchemaElement.settings,
-            );
+            const hiddenSettingDefaults = buildSettingsDefaults(hiddenSchemaElement.settings);
 
             arrayElementConfiguration = {
                 ...arrayElementConfiguration,
@@ -171,34 +159,26 @@ export function parseArraySchemaDefaults(
         configuration[`${arraySchemaId}`].push({ ...arrayElementConfiguration });
     }
 
-    arraySchema.forEach(
-        (schemaElement: TabSchemaElement | ArraySchemaElement) => {
-            if (schemaElement.type === SchemaElementType.ARRAY) {
-                const subArraySchemaElement = schemaElement as ArraySchemaElement;
-                const arrayConfiguration = parseArraySchemaDefaults(
-                    subArraySchemaElement,
-                );
-                configuration = {
-                    ...configuration,
-                    ...arrayConfiguration,
-                };
-            }
-        },
-    );
+    arraySchema.forEach((schemaElement: TabSchemaElement | ArraySchemaElement) => {
+        if (schemaElement.type === SchemaElementType.ARRAY) {
+            const subArraySchemaElement = schemaElement as ArraySchemaElement;
+            const arrayConfiguration = parseArraySchemaDefaults(subArraySchemaElement);
+            configuration = {
+                ...configuration,
+                ...arrayConfiguration,
+            };
+        }
+    });
 
     return configuration;
 }
 
-export function generateWidgetConfiguration(
-    schema: (TabSchemaElement | ArraySchemaElement | HiddenSchemaElement)[],
-) {
+export function generateWidgetConfiguration(schema: (TabSchemaElement | ArraySchemaElement | HiddenSchemaElement)[]) {
     let configuration: WidgetConfiguration = {};
     schema.forEach((schemaElement: SchemaElement) => {
         if (schemaElement.type === SchemaElementType.TAB) {
             const tabSchemaElement = schemaElement as TabSchemaElement;
-            const tabSectionDefaults = parseTabSchemaDefaults(
-                tabSchemaElement.sections,
-            );
+            const tabSectionDefaults = parseTabSchemaDefaults(tabSchemaElement.sections);
             configuration = {
                 ...configuration,
                 ...tabSectionDefaults,
@@ -217,9 +197,7 @@ export function generateWidgetConfiguration(
 
         if (schemaElement.type === SchemaElementType.HIDDEN) {
             const hiddenSchemaElement = schemaElement as HiddenSchemaElement;
-            const hiddenSettingDefaults = buildSettingsDefaults(
-                hiddenSchemaElement.settings,
-            );
+            const hiddenSettingDefaults = buildSettingsDefaults(hiddenSchemaElement.settings);
 
             configuration = {
                 ...configuration,
