@@ -2,30 +2,12 @@ import Axios, { AxiosResponse } from 'axios';
 
 import AUTH_CONFIG from '../auth/authConfig';
 import { WidgetConfiguration } from '../schema/schemaParser/schemaParser';
-
-interface PublishWidgetResponse {
-    uuid: string;
-  }
+import { WidgetPreviewRenderRequest, WidgetPreviewRenderResponse, PublishWidgetResponse } from '../../types';
 
 export const widgetApi = {
     widgetPreviewRender: `${AUTH_CONFIG.apiPath}/content/widget-templates/preview`,
     widgetTemplatePublish: `${AUTH_CONFIG.apiPath}/content/widget-templates`,
 };
-
-interface WidgetPreviewRenderResponse {
-  data: {
-    html: string;
-  };
-}
-export interface WidgetPreviewRenderRequest {
-  widget_configuration: object;
-  widget_template: string;
-  placement_uuid: string;
-  widget_uuid: string;
-  storefront_api_query: string;
-  storefront_api_query_params: object;
-  channel_id: number;
-}
 
 /**
  * Fetches a widget preview by sending a POST request to the specified API endpoint.
@@ -54,20 +36,18 @@ export interface WidgetPreviewRenderRequest {
  *   console.error('Failed to fetch widget preview:', error.message);
  * }
  */
-export async function getWidget(data: WidgetPreviewRenderRequest): Promise<string> {
+export async function getWidget(
+    data: WidgetPreviewRenderRequest,
+): Promise<string> {
     try {
-        const response: AxiosResponse<WidgetPreviewRenderResponse> = await Axios.post(
-            widgetApi.widgetPreviewRender,
-            data,
-            {
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    'X-Auth-Client': AUTH_CONFIG.authId,
-                    'X-Auth-Token': AUTH_CONFIG.authToken,
-                },
+        const response: AxiosResponse<WidgetPreviewRenderResponse> = await Axios.post(widgetApi.widgetPreviewRender, data, {
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'X-Auth-Client': AUTH_CONFIG.authId,
+                'X-Auth-Token': AUTH_CONFIG.authToken,
             },
-        );
+        });
 
         return response.data.data.html;
     } catch (error) {
@@ -116,7 +96,10 @@ export const publishWidget = async (
 
     try {
         const response = await Axios({
-            method, headers, data: widgetData, url,
+            method,
+            headers,
+            data: widgetData,
+            url,
         });
 
         return response.data.data;
