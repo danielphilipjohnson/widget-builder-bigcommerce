@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "rootDir": "src",
     "outDir": "./dist",
     "module": "commonjs",
     "target": "es6",
@@ -16,19 +15,10 @@
     "noImplicitThis": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
-    "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": true,
     "allowSyntheticDefaultImports": true,
     "types": ["react", "jest", "node"]
   },
-  "exclude": [
-    "node_modules",
-    "dist",
-    "webpack",
-    "jest",
-    "src/setupTests.ts"
-  ],
-  "include": [
-    "./src/**/*"
-  ]
+  "exclude": ["node_modules", "dist", "webpack", "jest", "src/setupTests.ts", "./.eslintrc.js"],
+  "include": ["./src/**/*"]
 }
