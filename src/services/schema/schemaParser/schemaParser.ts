@@ -173,7 +173,9 @@ export function parseArraySchemaDefaults(arraySchemaElement: ArraySchemaElement)
     return configuration;
 }
 
-export function generateWidgetConfiguration(schema: (TabSchemaElement | ArraySchemaElement | HiddenSchemaElement)[]) {
+export function generateWidgetConfiguration(
+    schema: (TabSchemaElement | ArraySchemaElement | HiddenSchemaElement)[],
+) {
     let configuration: WidgetConfiguration = {};
     schema.forEach((schemaElement: SchemaElement) => {
         if (schemaElement.type === SchemaElementType.TAB) {
