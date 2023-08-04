@@ -98,7 +98,7 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
     "html-webpack-plugin": "^5.5.0",
-    "husky": "^8.0.0",
+    "husky": "^8.0.3",
     "jest": "^27.3.1",
     "jest-transform-css": "^6.0.0",
     "lint-staged": "^13.2.3",
@@ -115,13 +115,9 @@
     "webpack-cli": "^4.9.1",
     "webpack-dev-server": "^4.11.1"
   },
-  "pre-commit": "lint-staged",
   "lint-staged": {
-    "*.{js, jsx,ts,tsx}": [
-      "eslint --quiet --fix"
-    ],
-    "*.{json,js,ts,jsx,tsx,html}": [
-      "prettier --write --ignore-unknown"
+    "**/*.{js,ts}": [
+      "npm run lint"
     ]
   }
 }
