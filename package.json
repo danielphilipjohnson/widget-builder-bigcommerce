@@ -96,7 +96,7 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
     "html-webpack-plugin": "^5.5.0",
-    "husky": "^8.0.3",
+    "husky": "^8.0.0",
     "jest": "^27.3.1",
     "jest-transform-css": "^6.0.0",
     "lint-staged": "^13.2.3",
