@@ -1,3 +1,6 @@
+const path = require('path');
+
+
 module.exports = {
   env: {
     browser: true,
@@ -15,7 +18,7 @@ module.exports = {
     'plugin:react/recommended',
   ],
   parserOptions: {
-    project: './tsconfig.json',
+    project: path.resolve(__dirname, './tsconfig.json'),
     ecmaVersion: 6,
     sourceType: "module",
     ecmaFeatures: {
