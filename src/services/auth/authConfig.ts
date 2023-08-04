@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export interface AuthConfig {
+    [key: string]: string | number | boolean;
     authId: string;
     apiPath: string;
     authToken: string;

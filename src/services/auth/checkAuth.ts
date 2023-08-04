@@ -3,13 +3,15 @@ import { log, messages } from '../../messages';
 import { AuthConfig } from './authConfig';
 
 const checkCredentials = (authConfig: AuthConfig): boolean => {
-    let checkStatus = true;
-    Object.entries(authConfig).forEach(([key, value]: [string, string | undefined]) => {
-        if (!value) {
-            log.error(messages.invalidAuth(key));
-            checkStatus = false;
-        }
-    });
+    const checkStatus = Object.values(authConfig).every((value) => Boolean(value));
+
+    if (!checkStatus) {
+        Object.keys(authConfig).forEach((key) => {
+            if (!authConfig[key]) {
+                log.error(messages.invalidAuth(key));
+            }
+        });
+    }
 
     return checkStatus;
 };
