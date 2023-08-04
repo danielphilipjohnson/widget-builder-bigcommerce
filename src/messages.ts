@@ -4,8 +4,6 @@ function f(message: string) {
     return `[${new Date().toISOString()}] ${message}`;
 }
 
-console.log('test');
-
 /* eslint-disable no-console */
 export const log = {
     debug: (message: string) => console.debug(chalk.grey(f(message))),
