@@ -1,3 +1,5 @@
+import Axios from 'axios';
+
 import AUTH_CONFIG from '../auth/authConfig';
 
 import { widgetApi } from './widget';
@@ -86,7 +88,7 @@ describe('widget API', () => {
             });
         });
 
-        describe('when POST fails', () => {
+        describe('when POST fails handles errors gracefully', () => {
             afterEach(() => {
                 jest.restoreAllMocks();
                 axiosMock.reset();
