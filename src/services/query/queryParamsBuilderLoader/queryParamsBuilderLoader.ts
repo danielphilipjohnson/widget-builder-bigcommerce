@@ -1,23 +1,21 @@
-import * as fs from 'fs';
+import fs from 'fs/promises';
 
 import WidgetFileType, { FileLoaderResponse } from '../../../types';
 import { messages } from '../../../messages';
 
-export default function queryParamsBuilderLoader(widgetDir: string): Promise<FileLoaderResponse> {
-    return new Promise((resolve, reject) => {
-        fs.readFile(
-            `${widgetDir}/${WidgetFileType.QUERY_PARAMS_BUILDER}`,
-            'utf8',
-            (error: Error, data: string) => {
-                if (!data || error) {
-                    reject(messages.invalidQueryParamsBuilder());
-                }
+export default async function queryParamsBuilderLoader(widgetDir: string): Promise<FileLoaderResponse> {
+    try {
+        const data = await fs.readFile(`${widgetDir}/${WidgetFileType.QUERY_PARAMS_BUILDER}`, 'utf8');
 
-                resolve({
-                    type: WidgetFileType.QUERY_PARAMS_BUILDER,
-                    data,
-                });
-            },
-        );
-    });
+        if (!data) {
+            throw new Error(messages.invalidQueryParamsBuilder());
+        }
+
+        return {
+            type: WidgetFileType.QUERY_PARAMS_BUILDER,
+            data,
+        };
+    } catch (error) {
+        throw new Error(messages.invalidQueryParamsBuilder());
+    }
 }
