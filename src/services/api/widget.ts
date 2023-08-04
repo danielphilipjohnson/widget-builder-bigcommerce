@@ -23,30 +23,78 @@ export interface WidgetPreviewRenderRequest {
   channel_id: number;
 }
 
-export function getWidget(data: WidgetPreviewRenderRequest): Promise<string> {
-    return new Promise((resolve, reject) => {
-        Axios({
-            method: 'post',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                'X-Auth-Client': AUTH_CONFIG.authId,
-                'X-Auth-Token': AUTH_CONFIG.authToken,
-            },
+// export function getWidget(data: WidgetPreviewRenderRequest): Promise<string> {
+//    return new Promise((resolve, reject) => {
+//        Axios({
+//            method: 'post',
+//            headers: {
+//                Accept: 'application/json',
+//                'Content-Type': 'application/json',
+//                'X-Auth-Client': AUTH_CONFIG.authId,
+//                'X-Auth-Token': AUTH_CONFIG.authToken,
+//            },
+//            data,
+//            url: widgetApi.widgetPreviewRender,
+//        })
+//            .then(
+//                ({
+//                    data: {
+//                        data: { html },
+//                    },
+//                }: AxiosResponse<WidgetPreviewRenderResponse>) => {
+//                    resolve(html);
+//                },
+//            )
+//            .catch((err: Error) => reject(err));
+//    });
+// }
+
+/**
+ * Fetches a widget preview by sending a POST request to the specified API endpoint.
+ *
+ * @param data - The request data for rendering the widget preview.
+ * @returns A Promise that resolves to the rendered HTML content of the widget preview.
+ * @throws An Error if the API request fails or if there is an error in the response.
+ *
+ * @example
+ * // Usage example:
+ * const requestData: WidgetPreviewRenderRequest = {
+ *   widget_configuration: { },
+ *   widget_template: "template_id",
+ *   placement_uuid: "placement_id",
+ *   widget_uuid: "widget_id",
+ *   storefront_api_query: "api_query_string",
+ *   storefront_api_query_params: { },
+ *   channel_id: 123,
+ *   schema_translations: "schema_translation_string",
+ * };
+ *
+ * try {
+ *   const widgetHTML = await getWidget(requestData);
+ *   console.log(widgetHTML); // Output the rendered HTML content of the widget preview.
+ * } catch (error) {
+ *   console.error('Failed to fetch widget preview:', error.message);
+ * }
+ */
+export async function getWidget(data: WidgetPreviewRenderRequest): Promise<string> {
+    try {
+        const response: AxiosResponse<WidgetPreviewRenderResponse> = await Axios.post(
+            widgetApi.widgetPreviewRender,
             data,
-            url: widgetApi.widgetPreviewRender,
-        })
-            .then(
-                ({
-                    data: {
-                        data: { html },
-                    },
-                }: AxiosResponse<WidgetPreviewRenderResponse>) => {
-                    resolve(html);
+            {
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    'X-Auth-Client': AUTH_CONFIG.authId,
+                    'X-Auth-Token': AUTH_CONFIG.authToken,
                 },
-            )
-            .catch((err: Error) => reject(err));
-    });
+            },
+        );
+
+        return response.data.data.html;
+    } catch (error) {
+        throw new Error('Request failed with status code 400'); // You can customize the error message
+    }
 }
 
 interface PublishWidgetResponse {
